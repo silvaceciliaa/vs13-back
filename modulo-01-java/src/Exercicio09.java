@@ -22,17 +22,20 @@ public class Exercicio09 {
         int minutosInicioTotal = horarioInicioHoras * 60 + horarioInicioMinutos;
         int minutosFimTotal = horarioFimHoras * 60 + horarioFimMinutos;
 
-        if (minutosInicioTotal <= minutosFimTotal) {
+        if (minutosInicioTotal == minutosFimTotal) {
+            duracaoHoras = 24;
+            duracaoMinutos = 0;
+        } else if (minutosInicioTotal <= minutosFimTotal) {
             minutosTotal = minutosFimTotal - minutosInicioTotal;
+            duracaoHoras = minutosTotal / 60;
+            duracaoMinutos = minutosTotal % 60;
         } else {
             minutosTotal = minutosDia - minutosInicioTotal + minutosFimTotal;
+            duracaoHoras = minutosTotal / 60;
+            duracaoMinutos = minutosTotal % 60;
         }
 
-        duracaoHoras = minutosTotal / 60;
-        duracaoMinutos = minutosTotal % 60;
-
-
-        System.out.println("O JOGO DUROU " + duracaoHoras + "HORA(S) E " + duracaoMinutos + " MINUTO(S)");
+        System.out.println("O JOGO DUROU " + duracaoHoras + " HORA(S) E " + duracaoMinutos + " MINUTO(S)");
 
         scanner.close();
     }
