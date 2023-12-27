@@ -13,5 +13,7 @@ public class Exercicio05 {
         double area = altura * base;
 
         System.out.println("Área "+ area);
+
+        scanner.close();
     }
 }
