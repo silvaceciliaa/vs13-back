@@ -4,7 +4,7 @@ public class Exercicio01 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        double precoComDesconto, precoTotal;
+        double precoComDesconto, precoTotal, desconto = 0.05;
 
         System.out.print("Digite o nome do produto: ");
         String nomeProduto = scanner.nextLine();
@@ -19,7 +19,6 @@ public class Exercicio01 {
         System.out.println("Promoção: " + nomeProduto);
         System.out.println("------------------------");
 
-        double desconto = 0.05;
         for (int quantidade = 1; quantidade <= 10; quantidade++) {
             precoComDesconto = precoProduto * (1 - desconto);
             precoTotal = precoComDesconto * quantidade;
