@@ -28,5 +28,8 @@ public class Cliente {
     }
     public void imprimirCliente() {
         System.out.println("Imprimindo informações do cliente: " + nome);
+        System.out.println("CPF: " + cpf);
+        imprimirContatos();
+        imprimirEnderecos();
     }
 }

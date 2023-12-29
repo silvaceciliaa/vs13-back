@@ -5,7 +5,6 @@ public class ContaCorrente {
     public double saldo;
     public double chequeEspecial;
 
-    // - Verificar depois
     public void imprimirContaCorrente() {
         if (cliente != null) {
             System.out.println("Cliente: " + cliente.nome);
@@ -18,11 +17,13 @@ public class ContaCorrente {
     }
 
     public boolean sacar(double valorSaque){
-        // - Não é permitido sacar mais do que o saldo + cheque especial
         if (this.saldo >= valorSaque && valorSaque > 0){
             this.saldo -= valorSaque;
             return true;
-        } else {
+        } else if(this.saldo + this.chequeEspecial >= valorSaque && valorSaque > 0){
+            this.saldo -= valorSaque;
+            return true;
+        }else {
             return false;
         }
     }
