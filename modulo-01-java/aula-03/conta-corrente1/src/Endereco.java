@@ -9,9 +9,16 @@ public class Endereco {
     public String pais;
 
     public void imprimirEndereco() {
-        String tipoEndereco = (tipo == 1) ? "Residencial" : (tipo == 2) ? "Comercial" : "Outro";
+        String tipoEndereco;
+        if (tipo == 1) {
+            tipoEndereco = "Residencial";
+        } else if (tipo == 2) {
+            tipoEndereco = "Comercial";
+        } else {
+            tipoEndereco = "Outro";
+        }
         String complementoInformado = complemento.equals("") ? "N/A" : complemento;
 
-        System.out.println("Rua: " + this.logradouro + " n.º " + this.numero + " - Cidade: " + this.cidade + ", " + this.estado + " - CEP: " + this.cep  + " - " + this.pais +", Tipo: " + tipoEndereco);
+        System.out.println("Rua: " + this.logradouro + " n.º " + this.numero + " - Complemento: " + complementoInformado + " - Cidade: " + this.cidade + ", " + this.estado + " - CEP: " + this.cep  + " - " + this.pais +", Tipo: " + tipoEndereco);
     }
 }
