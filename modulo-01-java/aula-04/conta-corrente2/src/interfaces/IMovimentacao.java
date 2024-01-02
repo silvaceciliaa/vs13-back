@@ -2,12 +2,13 @@ package interfaces;
 
 public interface IMovimentacao {
 
-    Cliente getCliente();
     String getNumeroConta();
-    String getAgencia();
-    double getSaldo();
-    void setCliente(Cliente cliente);
     void setNumeroConta(String numeroConta);
+    String getAgencia();
     void setAgencia(String agencia);
+    double getSaldo();
     void setSaldo(double saldo);
+    boolean sacar(double valor);
+    boolean depositar(double valor);
+    boolean transferir(IMovimentacao conta, double valor);
 }

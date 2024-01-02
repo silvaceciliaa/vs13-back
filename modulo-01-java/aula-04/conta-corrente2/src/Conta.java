@@ -6,15 +6,32 @@ public class Conta implements IMovimentacao {
     private String agencia;
     private double saldo;
 
-    @Override
+    public Conta(Cliente cliente, String numeroConta, String agencia, double saldo){
+        this.cliente = cliente;
+        this.numeroConta = numeroConta;
+        this.agencia = agencia;
+        this.saldo = saldo;
+    }
+
     public Cliente getCliente(){
         return this.cliente;
     }
 
+    public void setCliente(Cliente cliente){
+        this.cliente = cliente;
+    }
+
+    @Override
     public String getNumeroConta(){
         return this.numeroConta;
     }
 
+    @Override
+    public void setNumeroConta(String numeroConta){
+        this.numeroConta = numeroConta;
+    }
+
+    @Override
     public String getAgencia(){
         return this.agencia;
     }
@@ -23,19 +40,48 @@ public class Conta implements IMovimentacao {
         return this.saldo;
     }
 
-    public void setCliente(Cliente cliente){
-        this.cliente = cliente;
-    }
-
-    public void setNumeroConta(String numeroConta){
-        this.numeroConta = numeroConta;
-    }
-
     public void setAgencia(String agencia){
         this.agencia = agencia;
     }
 
     public void setSaldo(double saldo){
         this.saldo = saldo;
+    }
+
+    @Override
+    public boolean sacar(double valor) {
+        if (this.getSaldo() >= valor && valor > 0) {
+            this.setSaldo(this.getSaldo() - valor);
+            System.out.println("Saque de: " + valor + " realizado com sucesso!");
+            return true;
+        } else {
+            System.out.println("Não foi possível realizar o saque.");
+            return false;
+        }
+    }
+
+    @Override
+    public boolean depositar(double valor) {
+        if (valor > 0){
+            saldo += valor;
+            System.out.println("Depósito no valor de: " + valor + " realizado com sucesso!");
+            return true;
+        }else {
+            System.out.println("Operação de depósito não foi concluída.");
+            return false;
+        }
+    }
+
+    @Override
+    public boolean transferir(IMovimentacao conta, double valor) {
+        if (valor > 0 && saldo >= valor) {
+            saldo -= valor;
+            conta.depositar(valor);
+            System.out.println("Transferência realizada com sucesso!");
+            return true;
+        } else {
+            System.out.println("Não foi possível realizar a transferência.");
+            return false;
+        }
     }
 }
