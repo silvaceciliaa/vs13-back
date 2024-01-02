@@ -18,21 +18,22 @@ public class Main {
         conta1.agencia = 1;
         conta2.agencia = 1;
 
-
         conta1.saldo = 100.00;
 
         conta2.saldo = 0.50;
 
         conta1.chequeEspecial = 500.00;
 
-        String contaTemSaldo = conta1.sacar(90.00) == true ? "Saque realizado com sucesso!" : "Saldo insuficiente";
-        System.out.println(contaTemSaldo);
+        System.out.println();
+        conta1.imprimirContaCorrente();
+        System.out.println();
+        conta2.imprimirContaCorrente();
 
-        String statusTransferencia = conta1.transferir(5.00, conta2) == true ? "Transferência realizada com sucesso!" : "Saldo insuficiente";
-        System.out.println(statusTransferencia);
+        conta1.sacar(90.00);
 
-        String statusDeposito = conta1.depositar(100.50) == true ? "Valor depositado!" : "Valor não permitido";
-        System.out.println(statusDeposito);
+        conta1.transferir(5.00, conta2);
+
+       conta1.depositar(100.50);
 
         conta1.sacar(200.00);
 
