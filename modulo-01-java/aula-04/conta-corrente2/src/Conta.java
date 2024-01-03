@@ -21,17 +21,14 @@ public class Conta implements IMovimentacao {
         this.cliente = cliente;
     }
 
-    @Override
     public String getNumeroConta(){
         return this.numeroConta;
     }
 
-    @Override
     public void setNumeroConta(String numeroConta){
         this.numeroConta = numeroConta;
     }
 
-    @Override
     public String getAgencia(){
         return this.agencia;
     }
