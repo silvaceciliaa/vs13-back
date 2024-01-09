@@ -19,19 +19,16 @@ public class Main {
         Cliente cliente1 = new Cliente("Cecília", "123456789");
         Cliente cliente2 = new Cliente("Arthur", "987654321");
 
-
         ContaCorrente contaCorrente = new ContaCorrente(cliente1, "14155432", "001", 5666.33, 900.00);
         ContaPagamento contaPagamento = new ContaPagamento(cliente1, contaCorrente.getNumeroConta(), contaCorrente.getAgencia(), contaCorrente.getSaldo());
         ContaPoupanca contaPoupanca = new ContaPoupanca(cliente2, "21192140", "002", 43.68);
 
         contaPagamento.sacar(900.00);
-        contaCorrente.sincronizarSaldo(contaPagamento.getSaldo());
 
         contaCorrente.transferir(contaPoupanca, 500.00);
 
         contaPoupanca.depositar(100.50);
 
-        contaPagamento.sincronizarSaldo(contaCorrente.getSaldo());
 
         System.out.println();
         contaCorrente.imprimir();

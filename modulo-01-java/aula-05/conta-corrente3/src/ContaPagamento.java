@@ -23,10 +23,6 @@ public class ContaPagamento extends Conta implements IImpresao {
         }
     }
 
-    public void sincronizarSaldo(double novoSaldo) {
-        setSaldo(novoSaldo);
-    }
-
     public boolean sacar(double valor){
         if (getSaldo() >= valor + TAXA_SAQUE && valor > 0) {
 

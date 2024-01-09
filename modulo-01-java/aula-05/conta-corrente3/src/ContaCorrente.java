@@ -17,7 +17,7 @@ public class ContaCorrente extends Conta implements IImpresao {
     }
 
     public double retornarSaldoComChequeEspecial() {
-        return this.getSaldo() + this.chequeEspecial;
+        return getSaldo() + this.chequeEspecial;
     }
 
     @Override
@@ -32,16 +32,12 @@ public class ContaCorrente extends Conta implements IImpresao {
         }
     }
 
-    public void sincronizarSaldo(double novoSaldo) {
-        setSaldo(novoSaldo);
-    }
-
     public boolean sacar(double valor) {
 
         double saldoTotal = retornarSaldoComChequeEspecial();
 
         if (saldoTotal >= valor && valor > 0) {
-            this.setSaldo(this.getSaldo() - valor);
+            setSaldo(getSaldo() - valor);
             System.out.println("Saque no valor de: " + valor + " realizado com sucesso!");
             return true;
         } else {

@@ -51,8 +51,8 @@ public abstract class Conta implements IMovimentacao {
 
     @Override
     public boolean sacar(double valor) {
-        if (this.getSaldo() >= valor && valor > 0) {
-            this.setSaldo(this.getSaldo() - valor);
+        if (getSaldo() >= valor && valor > 0) {
+            setSaldo(getSaldo() - valor);
             System.out.println("Saque de: " + valor + " realizado com sucesso!");
             return true;
         } else {
