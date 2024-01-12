@@ -44,8 +44,10 @@ WHERE EXISTS ( SELECT *
 )
 
 -- Selecionando o id, nome da tabela pessoa junto com id, logradouro da tabela endereco
-SELECT p.id_pessoa, p.nome, ep.id_endereco, ep.logradouro
-FROM PESSOA p 
-JOIN PESSOA_X_PESSOA_ENDERECO pxpe ON pxpe.id_pessoa = p.id_pessoa
-JOIN ENDERECO_PESSOA ep ON ep.id_endereco = pxpe.id_endereco
+SELECT p.id_pessoa, p.nome
+FROM PESSOA p
+UNION
+SELECT ep.id_endereco, ep.logradouro
+FROM ENDERECO_PESSOA ep;
+
 
