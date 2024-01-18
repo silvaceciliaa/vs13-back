@@ -17,7 +17,7 @@ public class ContatoService {
         this.contatoRepository = contatoRepository;
     }
 
-    public Contato create(Contato contato) {
+    public Contato create(Contato contato) throws Exception {
         return contatoRepository.create(contato);
     }
 

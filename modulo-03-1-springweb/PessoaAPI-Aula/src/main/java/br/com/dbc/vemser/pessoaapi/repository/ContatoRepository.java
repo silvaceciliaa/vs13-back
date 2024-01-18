@@ -3,11 +3,11 @@ package br.com.dbc.vemser.pessoaapi.repository;
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
 import br.com.dbc.vemser.pessoaapi.entity.TipoContato;
 import org.springframework.stereotype.Repository;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 
 @Repository
@@ -23,7 +23,12 @@ public class ContatoRepository {
     }
 
 
-    public Contato create(Contato contato) {
+    public Contato create(Contato contato) throws Exception { // - passar regras de negócio para service
+        if (contato != null && StringUtils.isBlank(contato.getNumero())) {
+            throw new Exception("Número inválido!");
+        } else if(contato!= null && contato.getNumero().length() != 11) {
+            throw new Exception("Número inválido!");
+        }
         contato.setIdContato(COUNTER.incrementAndGet());
         listaContatos.add(contato);
         return contato;

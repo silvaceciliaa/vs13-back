@@ -27,7 +27,7 @@ public class ContatoController {
     }
 
     @PostMapping // com um id da pessoa para adicionar o contato e no corpo, receber o contato para inserir
-    public Contato create(@RequestBody Contato contato){
+    public Contato create(@RequestBody Contato contato) throws Exception {
         return contatoService.create(contato);
     }
 

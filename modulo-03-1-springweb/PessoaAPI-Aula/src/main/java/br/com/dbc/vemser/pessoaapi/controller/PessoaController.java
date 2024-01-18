@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
+import br.com.dbc.vemser.pessoaapi.config.PropertieReader;
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 import org.springframework.web.bind.annotation.*;
@@ -11,14 +12,16 @@ import java.util.List;
 public class PessoaController {
 
     private final PessoaService pessoaService;
+    private final PropertieReader propertieReader;
 
-    public PessoaController(PessoaService pessoaService) {
+    public PessoaController(PessoaService pessoaService, PropertieReader propertieReader) {
         this.pessoaService = pessoaService;
+        this.propertieReader = propertieReader;
     }
 
-    @GetMapping("/hello") // GET localhost:8080/pessoa/hello
-    public String hello() {
-        return "Hello world!";
+    @GetMapping("/ambiente")
+    public String obterAmbiente() {
+        return "O ambiente é: " + propertieReader.getAmbiente();
     }
 
     @GetMapping("/hello-2") // GET localhost:8080/pessoa/hello2
@@ -42,7 +45,7 @@ public class PessoaController {
 //    }
 
     @PostMapping // POST localhost:8080/pessoa
-    public Pessoa create(@RequestBody Pessoa pessoa) {
+    public Pessoa create(@RequestBody Pessoa pessoa) throws Exception {
         return pessoaService.create(pessoa);
     }
 
