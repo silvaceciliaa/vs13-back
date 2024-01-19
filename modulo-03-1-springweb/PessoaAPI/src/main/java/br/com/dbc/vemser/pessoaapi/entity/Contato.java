@@ -2,11 +2,18 @@ package br.com.dbc.vemser.pessoaapi.entity;
 
 import br.com.dbc.vemser.pessoaapi.enums.TipoContato;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class Contato {
     private Integer idContato;
     private Integer idPessoa;
+
+    @NotNull
     private TipoContato tipoContato;
     private String numero;
+
+    @NotBlank
     private String descricao;
 
     public Contato() {
@@ -20,12 +27,6 @@ public class Contato {
         this.descricao = descricao;
     }
 
-    public Contato(Integer idContato, Integer idPessoa, TipoContato tipoContato, String numero) {
-        this.idContato = idContato;
-        this.idPessoa = idPessoa;
-        this.tipoContato = tipoContato;
-        this.numero = numero;
-    }
     public Integer getIdContato() {
         return idContato;
     }

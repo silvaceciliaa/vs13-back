@@ -3,6 +3,9 @@ package br.com.dbc.vemser.pessoaapi.controller;
 import br.com.dbc.vemser.pessoaapi.config.PropertieReader;
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
+import javax.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,18 +48,19 @@ public class PessoaController {
 //    }
 
     @PostMapping // POST localhost:8080/pessoa
-    public Pessoa create(@RequestBody Pessoa pessoa) throws Exception {
-        return pessoaService.create(pessoa);
+    public ResponseEntity<Pessoa> create(@Valid @RequestBody Pessoa pessoa) throws Exception {
+        return new ResponseEntity<>(pessoaService.create(pessoa), HttpStatus.OK);
     }
 
     @PutMapping("/{idPessoa}") // PUT localhost:8080/pessoa/1000
-    public Pessoa update(@PathVariable("idPessoa") Integer id,
-                         @RequestBody Pessoa pessoaAtualizar) throws Exception {
-        return pessoaService.update(id, pessoaAtualizar);
+    public ResponseEntity<Pessoa> update(@PathVariable("idPessoa") Integer id,
+                         @Valid @RequestBody Pessoa pessoaAtualizar) throws Exception {
+        return new ResponseEntity<>(pessoaService.update(id, pessoaAtualizar), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{idPessoa}") // DELETE localhost:8080/pessoa/10
-    public void delete(@PathVariable("idPessoa") Integer id) throws Exception {
+    @DeleteMapping("/{idPessoa}")
+    public ResponseEntity<Void> delete(@PathVariable("idPessoa") Integer id) throws Exception {
         pessoaService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }

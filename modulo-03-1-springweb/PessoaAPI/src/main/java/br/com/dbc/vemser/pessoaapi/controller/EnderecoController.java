@@ -16,7 +16,7 @@ public class EnderecoController {
         this.enderecoService = enderecoService;
     }
 
-    @GetMapping // Recebe todos os endereços
+    @GetMapping
     public List<Endereco> list(){
         return enderecoService.list();
     }

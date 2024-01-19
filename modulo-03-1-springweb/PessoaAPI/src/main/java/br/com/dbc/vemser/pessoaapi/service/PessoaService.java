@@ -1,7 +1,9 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
+import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.PessoaRepository;
+import javax.validation.ConstraintViolationException;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -18,18 +20,6 @@ public class PessoaService {
     }
 
     public Pessoa create(Pessoa pessoa) throws Exception {
-        if (pessoa != null && StringUtils.isBlank(pessoa.getNome())){
-            throw new Exception("Informe um nome!");
-
-        } else if(StringUtils.isBlank(pessoa.getCpf())){
-            throw new Exception("CPF inválido");
-
-        } else if(pessoa != null && pessoa.getCpf().length() != 11){
-            throw new Exception("CPF inválido");
-
-        } else if(pessoa != null && ObjectUtils.isEmpty(pessoa.getDataNascimento())){
-            throw new Exception("Informe uma data de nasimento!");
-        }
         return pessoaRepository.create(pessoa);
     }
 
@@ -61,7 +51,7 @@ public class PessoaService {
         Pessoa pessoaRecuperada = pessoaRepository.list().stream()
                 .filter(pessoa -> pessoa.getIdPessoa().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new Exception("Pessoa não encontrada!"));
+                .orElseThrow(() -> new RegraDeNegocioException("Pessoa não encontrada!"));
         return pessoaRecuperada;
     }
 }
