@@ -20,7 +20,7 @@ public class ContatoService {
     }
 
     public Contato create(Contato contato) throws RegraDeNegocioException {
-        if (!pessoaJaExiste(contato.getIdContato())) {
+        if (!pessoaJaExiste(contato.getIdPessoa())) {
             throw new RegraDeNegocioException("Pessoa não existe!");
         }
 
@@ -67,6 +67,6 @@ public class ContatoService {
                 return contato;
             }
         }
-        throw new RegraDeNegocioException("Pessoa não encontrada!");
+        throw new RegraDeNegocioException("Contato não encontrado!");
     }
 }
