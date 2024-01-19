@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.repository;
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
+import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -23,7 +24,7 @@ public class PessoaRepository {
         listaPessoas.add(new Pessoa(COUNTER.incrementAndGet(), "Ana", LocalDate.parse("01/07/1990", formatter), "12345678917"));
     }
 
-    public Pessoa create(Pessoa pessoa){
+    public Pessoa create(Pessoa pessoa) throws RegraDeNegocioException {
         pessoa.setIdPessoa(COUNTER.incrementAndGet());
         listaPessoas.add(pessoa);
         return pessoa;
@@ -50,5 +51,4 @@ public class PessoaRepository {
                 .filter(pessoa -> pessoa.getNome().toUpperCase().contains(nome.toUpperCase()))
                 .collect(Collectors.toList());
     }
-
 }

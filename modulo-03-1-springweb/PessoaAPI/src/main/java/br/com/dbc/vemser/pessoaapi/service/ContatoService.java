@@ -1,7 +1,10 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
+import br.com.dbc.vemser.pessoaapi.enums.TipoContato;
+import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.ContatoRepository;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +19,14 @@ public class ContatoService {
         this.contatoRepository = contatoRepository;
     }
 
-    public Contato create(Contato contato) throws Exception {
-        if (contato != null && StringUtils.isBlank(contato.getNumero())) {
-            throw new Exception("Número inválido!");
-        } else if(contato!= null && contato.getNumero().length() != 11) {
-            throw new Exception("Número inválido!");
+    public Contato create(Contato contato) throws RegraDeNegocioException {
+        if (!pessoaJaExiste(contato.getIdContato())) {
+            throw new RegraDeNegocioException("Pessoa não existe!");
         }
+
         return contatoRepository.create(contato);
     }
+
 
     public List<Contato> list(){
         return contatoRepository.list();
@@ -50,6 +53,11 @@ public class ContatoService {
         return contatoRepository.listByPeople(id);
     }
 
+    private boolean pessoaJaExiste(int id) {
+        return contatoRepository.list().stream()
+                .anyMatch(c -> c.getIdContato().equals(id));
+    }
+
     private Contato getContato(Integer id) throws Exception{
 
         List<Contato> contatos = contatoRepository.list();
@@ -59,6 +67,6 @@ public class ContatoService {
                 return contato;
             }
         }
-        throw new Exception("Pessoa não encontrada!");
+        throw new RegraDeNegocioException("Pessoa não encontrada!");
     }
 }

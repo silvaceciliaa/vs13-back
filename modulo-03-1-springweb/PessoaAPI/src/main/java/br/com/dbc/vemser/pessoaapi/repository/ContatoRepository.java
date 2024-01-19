@@ -2,6 +2,7 @@ package br.com.dbc.vemser.pessoaapi.repository;
 
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
 import br.com.dbc.vemser.pessoaapi.enums.TipoContato;
+import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import org.springframework.stereotype.Repository;
 import org.apache.commons.lang3.StringUtils;
 
@@ -23,7 +24,7 @@ public class ContatoRepository {
     }
 
 
-    public Contato create(Contato contato) throws Exception {
+    public Contato create(Contato contato) throws RegraDeNegocioException {
         contato.setIdContato(COUNTER.incrementAndGet());
         listaContatos.add(contato);
         return contato;

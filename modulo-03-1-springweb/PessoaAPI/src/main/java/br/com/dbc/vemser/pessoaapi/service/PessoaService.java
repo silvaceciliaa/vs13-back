@@ -19,7 +19,10 @@ public class PessoaService {
         this.pessoaRepository = pessoaRepository;
     }
 
-    public Pessoa create(Pessoa pessoa) throws Exception {
+    public Pessoa create(Pessoa pessoa) throws RegraDeNegocioException {
+        if (cpfAlreadyExists(pessoa.getCpf())) {
+            throw new RegraDeNegocioException("CPF já cadastrado para outra pessoa.");
+        }
         return pessoaRepository.create(pessoa);
     }
 
@@ -54,4 +57,10 @@ public class PessoaService {
                 .orElseThrow(() -> new RegraDeNegocioException("Pessoa não encontrada!"));
         return pessoaRecuperada;
     }
+
+    private boolean cpfAlreadyExists(String cpf) {
+        return pessoaRepository.list().stream()
+                .anyMatch(p -> p.getCpf().equals(cpf));
+    }
+
 }

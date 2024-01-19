@@ -1,5 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.enums;
 
+import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
+
 import java.util.Arrays;
 
 public enum TipoContato {
@@ -16,7 +18,7 @@ public enum TipoContato {
         return tipo;
     }
 
-    public static TipoContato ofTipo(Integer tipo){
+    public static TipoContato ofTipo(Integer tipo) throws RegraDeNegocioException {
         return Arrays.stream(TipoContato.values())
                 .filter(tp -> tp.getTipo().equals(tipo))
                 .findFirst()

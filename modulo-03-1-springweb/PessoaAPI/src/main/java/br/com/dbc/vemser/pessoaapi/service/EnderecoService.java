@@ -1,7 +1,9 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.entity.Endereco;
+import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.EnderecoRepository;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +17,13 @@ public class EnderecoService {
         this.enderecoRepository = enderecoRepository;
     }
 
-    public Endereco create(Endereco endereco) { // - adicionar tratamento de erro
+    public Endereco create(Endereco endereco) throws RegraDeNegocioException {
+        if (!pessoaJaExiste(endereco.getIdPessoa())){
+            throw new RegraDeNegocioException("Pessoa não existe!");
+        }
+        if(ObjectUtils.isEmpty(endereco.getTipoEndereco())){
+            throw new RegraDeNegocioException("Inválido");
+        }
         return enderecoRepository.create(endereco);
     }
 
@@ -53,6 +61,11 @@ public class EnderecoService {
         return enderecoRepository.listByEndereco(id);
     }
 
+    private boolean pessoaJaExiste(int id) {
+        return enderecoRepository.list().stream()
+                .anyMatch(e -> e.getIdEndereco().equals(id));
+    }
+
     private Endereco getEndereco(Integer id) throws Exception{
 
         List<Endereco> enderecos = enderecoRepository.list();
@@ -62,6 +75,6 @@ public class EnderecoService {
                 return endereco;
             }
         }
-        throw new Exception("Endereço não encontrado");
+        throw new RegraDeNegocioException("Endereço não encontrado");
     }
 }

@@ -1,9 +1,14 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.entity.Contato;
+
+import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.ContatoService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,18 +32,20 @@ public class ContatoController {
     }
 
     @PostMapping // com um id da pessoa para adicionar o contato e no corpo, receber o contato para inserir
-    public Contato create(@RequestBody Contato contato) throws Exception {
-        return contatoService.create(contato);
+    public ResponseEntity<Contato> create(@Valid @RequestBody Contato contato) throws Exception {
+
+        return new ResponseEntity<>(contatoService.create(contato), HttpStatus.OK);
     }
 
-    @PutMapping("/{idContato}") //  com id do contato, deve atualizar um contato existente e receber no corpo da requisição os novos dados do contato (deve receber todos os dados)
-    public Contato update(@PathVariable("idContato") Integer id,
-                         @RequestBody Contato contatoAtualizar) throws Exception {
-        return contatoService.update(id, contatoAtualizar);
+    @PutMapping("/{idContato}")
+    public ResponseEntity<Contato> update(@PathVariable("idContato") Integer id,
+                         @Valid @RequestBody Contato contatoAtualizar) throws Exception {
+        return new ResponseEntity<>(contatoService.update(id, contatoAtualizar), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{idContato}") // deve receber um id do contato e remover da lista
-    public void delete(@PathVariable("idContato") Integer id) throws Exception {
+    @DeleteMapping("/{idContato}")
+    public ResponseEntity<Void> delete(@PathVariable("idContato") Integer id) throws Exception {
         contatoService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }
