@@ -21,8 +21,8 @@ public class ContatoController {
         return contatoService.list();
     }
 
-    @GetMapping("/byperson") // recebe o id da pessoa e mostra os seus contatos
-    public List<Contato> listByName(@RequestParam("id") int id) {
+    @GetMapping("/byperson/{id}")
+    public List<Contato> listByPerson(@PathVariable int id) {
         return contatoService.listByPeople(id);
     }
 
