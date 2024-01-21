@@ -1,10 +1,14 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.config.PropertieReader;
+import br.com.dbc.vemser.pessoaapi.dto.PessoaCreateDTO;
+import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 import javax.validation.Valid;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,18 +17,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Slf4j
-
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/pessoa") // localhost:8080/pessoa
 public class PessoaController {
 
     private final PessoaService pessoaService;
     private final PropertieReader propertieReader;
+    private final ObjectMapper objectMapper;
 
-    public PessoaController(PessoaService pessoaService, PropertieReader propertieReader) {
-        this.pessoaService = pessoaService;
-        this.propertieReader = propertieReader;
-    }
 
     @GetMapping("/ambiente")
     public String obterAmbiente() {
@@ -32,8 +33,9 @@ public class PessoaController {
     }
 
     @GetMapping // GET localhost:8080/pessoa
-    public List<Pessoa> list() {
-        return pessoaService.list();
+    public ResponseEntity<List<PessoaDTO>> list() {
+        List<PessoaDTO> pessoas = pessoaService.list();
+        return new ResponseEntity<>(pessoas, HttpStatus.OK);
     }
 
     @GetMapping("/byname") // GET localhost:8080/pessoa/byname?nome=Rafa&var2=xxx
@@ -47,15 +49,25 @@ public class PessoaController {
 //    }
 
     @PostMapping // POST localhost:8080/pessoa
-    public ResponseEntity<Pessoa> create(@Valid @RequestBody Pessoa pessoa) throws Exception {
-        log.info("Criando pessoa");
-        return new ResponseEntity<>(pessoaService.create(pessoa), HttpStatus.OK);
+    public ResponseEntity<PessoaDTO> create(@Valid @RequestBody PessoaCreateDTO pessoa) throws Exception {
+        log.debug("Criando pessoa");
+
+        PessoaDTO pessoaCriada = pessoaService.create(pessoa);
+        log.debug("Pessoa criada!");
+
+        //return ResponseEntity.ok(pessoaService.create(pessoa));
+        return new ResponseEntity<>(pessoaCriada, HttpStatus.OK);
     }
 
+
     @PutMapping("/{idPessoa}") // PUT localhost:8080/pessoa/1000
-    public ResponseEntity<Pessoa> update(@PathVariable("idPessoa") Integer id,
-                         @Valid @RequestBody Pessoa pessoaAtualizar) throws Exception {
-        return new ResponseEntity<>(pessoaService.update(id, pessoaAtualizar), HttpStatus.OK);
+    public ResponseEntity<PessoaDTO> update(@PathVariable("idPessoa") Integer id,
+                         @Valid @RequestBody PessoaCreateDTO pessoaAtualizar) throws Exception {
+
+        Pessoa pessoaAtualizada = pessoaService.update(id, pessoaAtualizar);
+        PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaAtualizada, PessoaDTO.class);
+
+        return new ResponseEntity<>(pessoaDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/{idPessoa}")
