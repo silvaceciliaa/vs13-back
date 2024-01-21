@@ -4,11 +4,15 @@ import br.com.dbc.vemser.pessoaapi.config.PropertieReader;
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 import javax.validation.Valid;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+@Slf4j
 
 @RestController
 @RequestMapping("/pessoa") // localhost:8080/pessoa
@@ -25,11 +29,6 @@ public class PessoaController {
     @GetMapping("/ambiente")
     public String obterAmbiente() {
         return "O ambiente é: " + propertieReader.getAmbiente();
-    }
-
-    @GetMapping("/hello-2") // GET localhost:8080/pessoa/hello2
-    public String hello2() {
-        return "Hello world 2!";
     }
 
     @GetMapping // GET localhost:8080/pessoa
@@ -49,6 +48,7 @@ public class PessoaController {
 
     @PostMapping // POST localhost:8080/pessoa
     public ResponseEntity<Pessoa> create(@Valid @RequestBody Pessoa pessoa) throws Exception {
+        log.info("Criando pessoa");
         return new ResponseEntity<>(pessoaService.create(pessoa), HttpStatus.OK);
     }
 

@@ -16,8 +16,8 @@ public class EnderecoRepository {
     private AtomicInteger COUNTER = new AtomicInteger();
 
     public EnderecoRepository() {
-        listaEnderecos.add(new Endereco(COUNTER.incrementAndGet(), 1, TipoEndereco.RESIDENCIAL, "Cornelia Street", 13, "89045425", "New York", "New York", "United States" ));
-        listaEnderecos.add(new Endereco(COUNTER.incrementAndGet(), 3, TipoEndereco.RESIDENCIAL, "Bond Street", 13, "242121", "London", "London", "England" ));
+        listaEnderecos.add(new Endereco(COUNTER.incrementAndGet(), 1, TipoEndereco.RESIDENCIAL, "Cornelia Street", 13, "condomio WTNY", "89045425", "New York", "New York", "United States" ));
+        listaEnderecos.add(new Endereco(COUNTER.incrementAndGet(), 3, TipoEndereco.RESIDENCIAL, "Bond Street", 13, "apto 321", "242121", "London", "London", "England" ));
     }
 
     public Endereco create(Endereco endereco) {
