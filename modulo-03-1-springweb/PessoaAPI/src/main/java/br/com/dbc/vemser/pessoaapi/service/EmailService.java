@@ -122,7 +122,24 @@ public class EmailService {
         }
     }
 
-    public String geContentFromTemplate() throws IOException, TemplateException {
+    public void sendDeleteEmail(PessoaDTO pessoaDTO) throws Exception {
+        MimeMessage mimeMessage = emailSender.createMimeMessage();
+
+        try {
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+
+            mimeMessageHelper.setFrom(from);
+            mimeMessageHelper.setTo(to);
+            mimeMessageHelper.setSubject("Você perdeu o acesso ao nosso sistema");
+            mimeMessageHelper.setText(getDeleteEmailContent(pessoaDTO), true);
+
+            emailSender.send(mimeMessageHelper.getMimeMessage());
+        } catch (MessagingException | IOException | TemplateException e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    private String geContentFromTemplate() throws IOException, TemplateException {
         Map<String, Object> dados = new HashMap<>();
         dados.put("nome", "Cecília");
 
@@ -131,7 +148,7 @@ public class EmailService {
         return html;
     }
 
-    public String getWelcomeEmailContent(PessoaDTO pessoaDTO) throws IOException, TemplateException {
+    private String getWelcomeEmailContent(PessoaDTO pessoaDTO) throws IOException, TemplateException {
         Map<String, Object> dados = new HashMap<>();
         dados.put("nome", pessoaDTO.getNome());
         dados.put("id", pessoaDTO.getIdPessoa());
@@ -141,12 +158,20 @@ public class EmailService {
         return FreeMarkerTemplateUtils.processTemplateIntoString(template, dados);
     }
 
-    public String getUpdateEmailContent(PessoaDTO pessoaDTO) throws IOException, TemplateException{
+    private String getUpdateEmailContent(PessoaDTO pessoaDTO) throws IOException, TemplateException{
         Map<String, Object> dados = new HashMap<>();
         dados.put("nome", pessoaDTO.getNome());
         dados.put("email", to);
 
         Template template = fmConfiguration.getTemplate("alter-data-email-template.ftl");
+        return FreeMarkerTemplateUtils.processTemplateIntoString(template, dados);
+    }
+
+    private String getDeleteEmailContent(PessoaDTO pessoaDTO) throws Exception{
+        Map<String, Object> dados = new HashMap<>();
+        dados.put("nome", pessoaDTO.getNome());
+
+        Template template = fmConfiguration.getTemplate("delete-email-template.ftl");
         return FreeMarkerTemplateUtils.processTemplateIntoString(template, dados);
     }
 }

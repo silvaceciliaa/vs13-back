@@ -74,6 +74,10 @@ public class PessoaService {
     public void delete(Integer id) throws Exception {
         Pessoa pessoaRecuperada = getPessoa(id);
         pessoaRepository.delete(pessoaRecuperada);
+
+        PessoaDTO pessoaDTOAtualizada = objectMapper.convertValue(pessoaRecuperada, PessoaDTO.class);
+
+        sendDeleteEmail(pessoaDTOAtualizada);
     }
 
     public List<PessoaDTO> listByName(String nome) {
@@ -115,6 +119,15 @@ public class PessoaService {
         try {
             emailService.sendUpdateEmail(pessoaDTO);
         } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    private void sendDeleteEmail(PessoaDTO pessoaDTO) throws Exception{
+        try {
+            emailService.sendDeleteEmail(pessoaDTO);
+        } catch (Exception e){
             e.printStackTrace();
             throw new Exception(e.getMessage());
         }
