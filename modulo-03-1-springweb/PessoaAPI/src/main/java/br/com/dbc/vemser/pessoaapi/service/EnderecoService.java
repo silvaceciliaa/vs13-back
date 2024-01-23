@@ -2,6 +2,7 @@ package br.com.dbc.vemser.pessoaapi.service;
 
 import br.com.dbc.vemser.pessoaapi.dto.EnderecoCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.EnderecoDTO;
+import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.dbc.vemser.pessoaapi.entity.Endereco;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.EnderecoRepository;
@@ -18,10 +19,11 @@ public class EnderecoService {
 
     private final EnderecoRepository enderecoRepository;
     private final PessoaService pessoaService;
+    private final EmailService emailService;
 
     private final ObjectMapper objectMapper;
 
-    public EnderecoDTO create(EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException {
+    public EnderecoDTO create(EnderecoCreateDTO enderecoCreateDTO) throws Exception {
 
         if (!pessoaJaExiste(enderecoCreateDTO.getIdPessoa())){
             throw new RegraDeNegocioException("Pessoa não existe!");
@@ -30,6 +32,8 @@ public class EnderecoService {
         Endereco enderecoEntity = objectMapper.convertValue(enderecoCreateDTO, Endereco.class);
         enderecoEntity = enderecoRepository.create(enderecoEntity);
         EnderecoDTO enderecoDTO = objectMapper.convertValue(enderecoEntity, EnderecoDTO.class);
+
+        sendWelcomeEmail(enderecoDTO);
 
         return enderecoDTO;
     }
@@ -64,12 +68,18 @@ public class EnderecoService {
 
         EnderecoDTO enderecoDTOAtualizado = objectMapper.convertValue(novoEndereco, EnderecoDTO.class);
 
+        sendUpdateEmail(enderecoDTOAtualizado);
+
         return enderecoDTOAtualizado;
     }
 
     public void delete(Integer id) throws Exception{
         Endereco enderecoADeletar = getEndereco(id);
         enderecoRepository.delete(enderecoADeletar);
+
+        EnderecoDTO enderecoDTOAtualizado = objectMapper.convertValue(enderecoADeletar, EnderecoDTO.class);
+
+        sendDeleteEmail(enderecoDTOAtualizado);
     }
 
     public List<EnderecoDTO> listByPeople(int id){
@@ -116,5 +126,32 @@ public class EnderecoService {
             }
         }
         throw new RegraDeNegocioException("Endereço não encontrado");
+    }
+
+    private void sendWelcomeEmail(EnderecoDTO enderecoDTO) throws Exception{
+        try {
+            emailService.sendEmailAddress("Endereço cadastrado no sistema!", "welcome-address-email-template.ftl", enderecoDTO);
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    private void sendUpdateEmail(EnderecoDTO enderecoDTO) throws Exception{
+        try {
+            emailService.sendEmailAddress("Alteração nos dados da sua conta", "alter-data-email-template.ftl", enderecoDTO);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    private void sendDeleteEmail(EnderecoDTO enderecoDTO) throws Exception{
+        try {
+            emailService.sendEmailAddress("Você deletou o endereço do nosso sistema :(", "delete-address-email-template.ftl", enderecoDTO);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new Exception(e.getMessage());
+        }
     }
 }

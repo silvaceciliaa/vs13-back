@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.service;
 
+import br.com.dbc.vemser.pessoaapi.dto.EnderecoDTO;
 import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -27,7 +28,7 @@ public class EmailService {
 
     @Value("${spring.mail.username}")
     private String from;
-    private String to = "ceciliaalicesilva88@gmail.com";
+    private String to = "cecilia.silva@dbccompany.com.br";
 
     private final JavaMailSender emailSender;
 
@@ -106,6 +107,22 @@ public class EmailService {
         }
     }
 
+    public void sendEmailAddress(String subject, String templateName, EnderecoDTO enderecoDTO) throws Exception {
+        MimeMessage mimeMessage = emailSender.createMimeMessage();
+        try {
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+
+            mimeMessageHelper.setFrom(from);
+            mimeMessageHelper.setTo(to);
+            mimeMessageHelper.setSubject(subject);
+            mimeMessageHelper.setText(getEmailContentAddress(templateName, enderecoDTO), true);
+
+            emailSender.send(mimeMessageHelper.getMimeMessage());
+        } catch (MessagingException | IOException | TemplateException e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
     private String geContentFromTemplate() throws IOException, TemplateException { // método do rafael
         Map<String, Object> dados = new HashMap<>();
         dados.put("nome", "Cecília");
@@ -119,7 +136,17 @@ public class EmailService {
         Map<String, Object> dados = new HashMap<>();
         dados.put("nome", pessoaDTO.getNome());
         dados.put("id", pessoaDTO.getIdPessoa());
-        dados.put("email", to);
+        dados.put("email", from);
+
+        Template template = fmConfiguration.getTemplate(templateName);
+        return FreeMarkerTemplateUtils.processTemplateIntoString(template, dados);
+    }
+
+    private String getEmailContentAddress(String templateName, EnderecoDTO enderecoDTO) throws IOException, TemplateException {
+        Map<String, Object> dados = new HashMap<>();
+        dados.put("nome", to);
+        dados.put("id", enderecoDTO.getIdPessoa());
+        dados.put("email", from);
 
         Template template = fmConfiguration.getTemplate(templateName);
         return FreeMarkerTemplateUtils.processTemplateIntoString(template, dados);
