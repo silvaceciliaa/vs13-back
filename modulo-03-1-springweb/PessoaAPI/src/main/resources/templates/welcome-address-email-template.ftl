@@ -9,7 +9,7 @@
 <body>
     <p>Olá ${nome},</p>
     <p>Estamos felizes em ter você em nosso sistema :)</p>
-    <p>Seu cadastro de endereço foi realizado com sucesso, seu identificador é ${id}.</p>
+    <p>Seu cadastro de endereço foi realizado com sucesso!</p>
     <p>Qualquer dúvida é só contatar o suporte pelo e-mail ${email} </p>
     <p>Att, Sistema</p>
 </body>

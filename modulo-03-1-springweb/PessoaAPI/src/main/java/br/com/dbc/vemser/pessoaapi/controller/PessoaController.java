@@ -36,7 +36,7 @@ public class PessoaController {
     public String email() throws Exception {
         //emailService.sendSimpleMessage();
         //emailService.sendWithAttachment();
-        emailService.sendEmail();
+        emailService.sendEmailRafaelWay();
 
         log.info("E-mail enviado!");
         return "E-mail enviado!";

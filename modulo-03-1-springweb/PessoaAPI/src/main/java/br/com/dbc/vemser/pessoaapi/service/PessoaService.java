@@ -108,7 +108,7 @@ public class PessoaService {
 
     private void sendWelcomeEmail(PessoaDTO pessoaDTO) throws Exception {
         try {
-            emailService.sendWelcomeEmail(pessoaDTO);
+            emailService.sendEmail("Bem-vindo(a) ao Sistema","welcome-email-template.ftl", pessoaDTO);
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception(e.getMessage());
@@ -117,7 +117,7 @@ public class PessoaService {
 
     private void sendUpdateEmail(PessoaDTO pessoaDTO) throws Exception{
         try {
-            emailService.sendUpdateEmail(pessoaDTO);
+            emailService.sendEmail("Alteração nos dados da sua conta", "alter-data-email-template.ftl", pessoaDTO);
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception(e.getMessage());
@@ -126,7 +126,7 @@ public class PessoaService {
 
     private void sendDeleteEmail(PessoaDTO pessoaDTO) throws Exception{
         try {
-            emailService.sendDeleteEmail(pessoaDTO);
+            emailService.sendEmail("Você perdeu acesso ao sistema :(", "delete-email-template", pessoaDTO);
         } catch (Exception e){
             e.printStackTrace();
             throw new Exception(e.getMessage());
