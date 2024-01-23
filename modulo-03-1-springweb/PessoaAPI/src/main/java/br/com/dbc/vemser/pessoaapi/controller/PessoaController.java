@@ -4,6 +4,7 @@ import br.com.dbc.vemser.pessoaapi.config.PropertieReader;
 import br.com.dbc.vemser.pessoaapi.dto.PessoaCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
+import br.com.dbc.vemser.pessoaapi.service.EmailService;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 import javax.validation.Valid;
 
@@ -22,12 +23,23 @@ import java.util.List;
 public class PessoaController {
 
     private final PessoaService pessoaService;
+    private final EmailService emailService;
     private final PropertieReader propertieReader;
 
 
     @GetMapping("/ambiente")
     public String obterAmbiente() {
         return "O ambiente é: " + propertieReader.getAmbiente();
+    }
+
+    @GetMapping("/email")
+    public String email() throws Exception {
+        //emailService.sendSimpleMessage();
+        //emailService.sendWithAttachment();
+        emailService.sendEmail();
+
+        log.info("E-mail enviado!");
+        return "E-mail enviado!";
     }
 
     @GetMapping // GET localhost:8080/pessoa

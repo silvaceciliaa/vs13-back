@@ -21,6 +21,7 @@ import java.util.List;
 public class PessoaService {
 
     private final PessoaRepository pessoaRepository;
+    private final EmailService emailService;
     private final ObjectMapper objectMapper;
 
 
@@ -34,6 +35,8 @@ public class PessoaService {
         pessoaEntity = pessoaRepository.create(pessoaEntity);
 
         PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaEntity, PessoaDTO.class);
+
+        sendWelcomeEmail(pessoaDTO);
 
         return pessoaDTO;
     }
@@ -96,6 +99,15 @@ public class PessoaService {
     private boolean cpfAlreadyExists(String cpf) {
         return pessoaRepository.list().stream()
                 .anyMatch(p -> p.getCpf().equals(cpf));
+    }
+
+    private void sendWelcomeEmail(PessoaDTO pessoaDTO) throws Exception {
+        try {
+            emailService.sendWelcomeEmail(pessoaDTO);
+        } catch (Exception e) {
+            // Trate a exceção ou registre-a, se necessário
+            e.printStackTrace();
+        }
     }
 
 }
