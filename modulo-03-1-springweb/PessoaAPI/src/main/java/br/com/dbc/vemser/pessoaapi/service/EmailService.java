@@ -27,7 +27,7 @@ public class EmailService {
 
     @Value("${spring.mail.username}")
     private String from;
-    private String to = "cecilia.silva@dbccompany.com.br";
+    private String to = "ceciliaalicesilva88@gmail.com";
 
     private final JavaMailSender emailSender;
 
@@ -90,22 +90,13 @@ public class EmailService {
         }
     }
 
-    public String geContentFromTemplate() throws IOException, TemplateException {
-        Map<String, Object> dados = new HashMap<>();
-        dados.put("nome", "Cecília");
-
-        Template template = fmConfiguration.getTemplate("email-template.ftl");
-        String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, dados);
-        return html;
-    }
-
     public void sendWelcomeEmail(PessoaDTO pessoaDTO) throws Exception {
         MimeMessage mimeMessage = emailSender.createMimeMessage();
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
 
             mimeMessageHelper.setFrom(from);
-            mimeMessageHelper.setTo(to); // Supondo que o e-mail da pessoa esteja presente em PessoaDTO
+            mimeMessageHelper.setTo(to);
             mimeMessageHelper.setSubject("Bem-vindo ao Sistema");
             mimeMessageHelper.setText(getWelcomeEmailContent(pessoaDTO), true);
 
@@ -115,6 +106,31 @@ public class EmailService {
         }
     }
 
+    public void sendUpdateEmail(PessoaDTO pessoaDTO) throws Exception{
+        MimeMessage mimeMessage = emailSender.createMimeMessage();
+        try {
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+
+            mimeMessageHelper.setFrom(from);
+            mimeMessageHelper.setTo(to);
+            mimeMessageHelper.setSubject("Alteração de dados na sua conta");
+            mimeMessageHelper.setText(getUpdateEmailContent(pessoaDTO), true);
+
+            emailSender.send(mimeMessageHelper.getMimeMessage());
+        } catch (MessagingException | IOException | TemplateException e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    public String geContentFromTemplate() throws IOException, TemplateException {
+        Map<String, Object> dados = new HashMap<>();
+        dados.put("nome", "Cecília");
+
+        Template template = fmConfiguration.getTemplate("email-template.ftl");
+        String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, dados);
+        return html;
+    }
+
     public String getWelcomeEmailContent(PessoaDTO pessoaDTO) throws IOException, TemplateException {
         Map<String, Object> dados = new HashMap<>();
         dados.put("nome", pessoaDTO.getNome());
@@ -122,6 +138,15 @@ public class EmailService {
         dados.put("email", to);
 
         Template template = fmConfiguration.getTemplate("welcome-email-template.ftl");
+        return FreeMarkerTemplateUtils.processTemplateIntoString(template, dados);
+    }
+
+    public String getUpdateEmailContent(PessoaDTO pessoaDTO) throws IOException, TemplateException{
+        Map<String, Object> dados = new HashMap<>();
+        dados.put("nome", pessoaDTO.getNome());
+        dados.put("email", to);
+
+        Template template = fmConfiguration.getTemplate("alter-data-email-template.ftl");
         return FreeMarkerTemplateUtils.processTemplateIntoString(template, dados);
     }
 }

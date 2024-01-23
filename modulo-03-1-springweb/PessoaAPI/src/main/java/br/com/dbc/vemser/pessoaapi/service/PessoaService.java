@@ -66,6 +66,7 @@ public class PessoaService {
 
         PessoaDTO pessoaDTOAtualizada = objectMapper.convertValue(pessoaRecuperada, PessoaDTO.class);
 
+        sendUpdateEmail(pessoaDTOAtualizada);
 
         return pessoaDTOAtualizada;
     }
@@ -105,8 +106,17 @@ public class PessoaService {
         try {
             emailService.sendWelcomeEmail(pessoaDTO);
         } catch (Exception e) {
-            // Trate a exceção ou registre-a, se necessário
             e.printStackTrace();
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    private void sendUpdateEmail(PessoaDTO pessoaDTO) throws Exception{
+        try {
+            emailService.sendUpdateEmail(pessoaDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception(e.getMessage());
         }
     }
 
