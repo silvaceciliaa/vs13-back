@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
 import br.com.dbc.vemser.pessoaapi.config.PropertieReader;
+import br.com.dbc.vemser.pessoaapi.controller.documentacao.IPessoaControllerDoc;
 import br.com.dbc.vemser.pessoaapi.dto.PessoaCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
@@ -8,6 +9,7 @@ import br.com.dbc.vemser.pessoaapi.service.EmailService;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 import javax.validation.Valid;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,8 +21,10 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/pessoa") // - editar
-public class PessoaController {
+@Tag(name = "Pessoa")
+@RequestMapping("/pessoa") // - editar nome
+// - retirar instancias de email da service e passar para controller
+public class PessoaController implements IPessoaControllerDoc {
 
     private final PessoaService pessoaService;
     private final EmailService emailService;
@@ -32,17 +36,7 @@ public class PessoaController {
         return "O ambiente é: " + propertieReader.getAmbiente();
     }
 
-    @GetMapping("/email")
-    public String email() throws Exception {
-        //emailService.sendSimpleMessage();
-        //emailService.sendWithAttachment();
-        emailService.sendEmailRafaelWay();
-
-        log.info("E-mail enviado!");
-        return "E-mail enviado!";
-    }
-
-    @GetMapping // GET localhost:8080/pessoa
+    @GetMapping
     public ResponseEntity<List<PessoaDTO>> list() {
         List<PessoaDTO> pessoas = pessoaService.list();
         return new ResponseEntity<>(pessoas, HttpStatus.OK);

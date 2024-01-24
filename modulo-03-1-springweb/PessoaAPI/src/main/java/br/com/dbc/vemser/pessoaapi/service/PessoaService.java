@@ -36,7 +36,7 @@ public class PessoaService {
 
         PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaEntity, PessoaDTO.class);
 
-        sendWelcomeEmail(pessoaDTO);
+        //sendWelcomeEmail(pessoaDTO);
 
         return pessoaDTO;
     }
@@ -66,7 +66,7 @@ public class PessoaService {
 
         PessoaDTO pessoaDTOAtualizada = objectMapper.convertValue(pessoaRecuperada, PessoaDTO.class);
 
-        sendUpdateEmail(pessoaDTOAtualizada);
+        //sendUpdateEmail(pessoaDTOAtualizada);
 
         return pessoaDTOAtualizada;
     }
@@ -77,7 +77,7 @@ public class PessoaService {
 
         PessoaDTO pessoaDTOAtualizada = objectMapper.convertValue(pessoaRecuperada, PessoaDTO.class);
 
-        sendDeleteEmail(pessoaDTOAtualizada);
+        //sendDeleteEmail(pessoaDTOAtualizada);
     }
 
     public List<PessoaDTO> listByName(String nome) {

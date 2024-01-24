@@ -137,7 +137,7 @@ public class EnderecoService {
         }
     }
 
-    private void sendUpdateEmail(EnderecoDTO enderecoDTO) throws Exception{
+    private void sendUpdateEmail(EnderecoDTO enderecoDTO) throws Exception{ // - usar object
         try {
             emailService.sendEmailAddress("Alteração nos dados da sua conta", "alter-data-email-template.ftl", enderecoDTO);
         }catch (Exception e){

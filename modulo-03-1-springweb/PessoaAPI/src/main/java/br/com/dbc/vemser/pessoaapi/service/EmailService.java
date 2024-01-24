@@ -28,7 +28,7 @@ public class EmailService {
 
     @Value("${spring.mail.username}")
     private String from;
-    private String to = "cecilia.silva@dbccompany.com.br";
+    private String to = "janoje2906@wentcity.com";
 
     private final JavaMailSender emailSender;
 
@@ -57,11 +57,6 @@ public class EmailService {
         mimeMessageHelper.setTo(to);
         mimeMessageHelper.setSubject("Assunto Assunto");
         mimeMessageHelper.setText("Meu e-mail!");
-
-//        File file = new File("static/imagem.jpg");
-//        FileSystemResource fileSr
-//                = new FileSystemResource(file);
-//        mimeMessageHelper.addAttachment(file.getName(), fileSr);
 
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource("static/eras.webp").getFile());

@@ -1,5 +1,6 @@
 package br.com.dbc.vemser.pessoaapi.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -11,16 +12,19 @@ import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
-public class PessoaCreateDTO { // request
+public class PessoaCreateDTO {
 
-    @NotBlank
+    @Schema(description = "Nome da Pessoa", required = true, example = "Cecília Silva")
+    @NotNull(message = "Nome não pode ser nulo")
     private String nome;
 
+    @Schema(description = "Data de nascimento", required = true)
     @NotNull
-    @PastOrPresent
+    @PastOrPresent(message = "Data de nascimento deve ser no presente ou no passado")
     private LocalDate dataNascimento;
 
-    @NotBlank
-    @Size(min = 11, max = 11)
+    @Schema(description = "CPF", required = true, example = "12345678910")
+    @NotBlank(message = "CPF não pode ser nulo")
+    @Size(min = 11, max = 11, message = "CPF deve conter 11 dígitos")
     private String cpf;
 }
