@@ -31,15 +31,10 @@ public class PessoaController {
         return pessoaService.list();
     }
 
-    @GetMapping("/byname") // GET localhost:8080/pessoa/byname?nome=Rafa&var2=xxx
+    @GetMapping("/byname")
     public List<Pessoa> listByName(@RequestParam("nome") String nome) {
         return pessoaService.listByName(nome);
     }
-
-//    @GetMapping("/byname/{nome}") // GET localhost:8080/pessoa/byname/nome
-//    public List<Pessoa> listByNamePath(@PathVariable("nome") String nome) {
-//        return pessoaService.listByName(nome);
-//    }
 
     @PostMapping // POST localhost:8080/pessoa
     public Pessoa create(@RequestBody Pessoa pessoa) {

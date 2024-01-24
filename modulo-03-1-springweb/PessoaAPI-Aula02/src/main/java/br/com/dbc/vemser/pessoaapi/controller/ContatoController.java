@@ -21,9 +21,9 @@ public class ContatoController {
         return contatoService.list();
     }
 
-    @GetMapping("/byperson/{id}")
-    public List<Contato> listByPerson(@PathVariable int id) {
-        return contatoService.listByPeople(id);
+    @GetMapping("/byperson/{idPessoa}")
+    public List<Contato> listByPerson(@PathVariable int idPessoa) {
+        return contatoService.listByPeople(idPessoa);
     }
 
     @PostMapping // com um id da pessoa para adicionar o contato e no corpo, receber o contato para inserir
