@@ -16,29 +16,29 @@ public class EnderecoCreateDTO {
 
     private Integer idPessoa;
 
-    @NotNull
+    @NotNull(message = "Tipo de endereço não pode ser nulo")
     private TipoEndereco tipoEndereco;
 
-    @NotBlank
-    @Size(max = 250)
+    @NotBlank(message = "Logradouro não pode ser nulo")
+    @Size(max = 250, message = "máximo de 250 caracteres")
     private String logradouro;
 
-    @NotNull
+    @NotNull(message = "Número não pode ser nulo")
     private Integer numero;
     private String complemento;
 
-    @NotBlank
-    @Size(max = 8)
+    @NotBlank(message = "CEP não pode ser nulo")
+    @Size(min = 8, max = 8, message = "CEP deve conter 8 dígitos")
     private String cep;
 
-    @NotBlank
-    @Size(max = 250)
+    @NotBlank(message = "Cidade não pode ser nulo")
+    @Size(max = 250, message = "Cidade deve conter no máximo 250 caracteres")
     private String cidade;
 
-    @NotBlank
+    @NotBlank(message = "Estado não pode ser nulo")
     private String estado;
 
-    @NotBlank
+    @NotBlank(message = "País não pode ser nulo")
     private String pais;
 
 }
