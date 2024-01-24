@@ -11,15 +11,15 @@ public class Pessoa {
 
     private Integer idPessoa;
 
-    @NotBlank
+    @NotBlank(message = "Nome não pode ser nulo")
     private String nome;
 
-    @NotNull
-    @PastOrPresent
+    @NotNull(message = "Data de nascimento não pode ser nulo")
+    @PastOrPresent(message = "Data de nascimento deve ser no presente ou no passado")
     private LocalDate dataNascimento;
 
-    @NotBlank
-    @Size(min = 11, max = 11)
+    @NotBlank(message = "CPF não pode ser nulo")
+    @Size(min = 11, max = 11, message = "CPF deve conter 11 dígitos")
     private String cpf;
 
     public Pessoa() {

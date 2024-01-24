@@ -10,16 +10,16 @@ public class Contato {
     private Integer idContato;
     private Integer idPessoa;
 
-    @NotNull
+    @NotNull(message = "Tipo de contato não pode ser nulo")
     private TipoContato tipoContato;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 13)
+    @NotBlank(message = "Número não pode ser nulo")
+    @Size(max = 13, message = "Número deve ter no máximo 13 dígitos")
     private String numero;
 
-    @NotBlank
+    @NotBlank(message = "Descriçã não pode ser nula")
     private String descricao;
+
 
     public Contato() {
     }
