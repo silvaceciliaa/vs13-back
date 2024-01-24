@@ -1,9 +1,10 @@
 package br.com.dbc.vemser.pessoaapi.controller;
 
+import br.com.dbc.vemser.pessoaapi.controller.documentacao.IEnderecoControllerDoc;
 import br.com.dbc.vemser.pessoaapi.dto.EnderecoCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.EnderecoDTO;
-import br.com.dbc.vemser.pessoaapi.entity.Endereco;
 import br.com.dbc.vemser.pessoaapi.service.EnderecoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,10 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@Tag(name = "Endereço")
 @RequestMapping("/endereco")
 @RequiredArgsConstructor
-public class EnderecoController {
+public class EnderecoController implements IEnderecoControllerDoc {
 
     private final EnderecoService enderecoService;
 

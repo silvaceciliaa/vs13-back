@@ -22,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @Tag(name = "Pessoa")
-@RequestMapping("/pessoa") // - editar nome
+@RequestMapping("/pessoa")
 // - retirar instancias de email da service e passar para controller
 public class PessoaController implements IPessoaControllerDoc {
 

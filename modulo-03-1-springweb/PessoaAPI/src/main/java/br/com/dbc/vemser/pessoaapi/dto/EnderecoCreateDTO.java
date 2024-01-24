@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.dto;
 
 import br.com.dbc.vemser.pessoaapi.enums.TipoEndereco;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,29 +17,37 @@ public class EnderecoCreateDTO {
 
     private Integer idPessoa;
 
-    @NotNull
+    @Schema(description = "Tipo do endereço", required = true, example = "RESIDENCIAL")
+    @NotNull(message = "Tipo de endereço não pode ser nulo")
     private TipoEndereco tipoEndereco;
 
-    @NotBlank
-    @Size(max = 250)
+    @Schema(description = "Logradouro", required = true, example = "Cornelia Street")
+    @NotBlank(message = "Logradouro não pode ser nulo")
+    @Size(max = 250, message = "máximo de 250 caracteres")
     private String logradouro;
 
-    @NotNull
+    @Schema(description = "Número", required = true, example = "66")
+    @NotNull(message = "Número não pode ser nulo")
     private Integer numero;
+    @Schema(description = "Complemento", required = false, example = "Apto. 514")
     private String complemento;
 
-    @NotBlank
-    @Size(max = 8)
+    @Schema(description = "CEP", required = true, example = "80045412")
+    @NotBlank(message = "CEP não pode ser nulo")
+    @Size(min = 8, max = 8, message = "CEP deve conter 8 dígitos")
     private String cep;
 
-    @NotBlank
-    @Size(max = 250)
+    @Schema(description = "Cidade", required = true, example = "Petrolina")
+    @NotBlank(message = "Cidade não pode ser nulo")
+    @Size(max = 250, message = "Cidade deve conter no máximo 250 caracteres")
     private String cidade;
 
-    @NotBlank
+    @Schema(description = "Estado", required = true, example = "Pernambuco")
+    @NotBlank(message = "Estado não pode ser nulo")
     private String estado;
 
-    @NotBlank
+    @Schema(description = "País", required = true, example = "Brasil")
+    @NotBlank(message = "País não pode ser nulo")
     private String pais;
 
 }

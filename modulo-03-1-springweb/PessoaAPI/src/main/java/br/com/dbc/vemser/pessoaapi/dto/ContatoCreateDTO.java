@@ -1,6 +1,7 @@
 package br.com.dbc.vemser.pessoaapi.dto;
 
 import br.com.dbc.vemser.pessoaapi.enums.TipoContato;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,15 +17,17 @@ public class ContatoCreateDTO {
 
     private Integer idPessoa;
 
-    @NotNull
+    @Schema(description = "Tipo de contato", required = true, example = "COMERCIAL")
+    @NotNull(message = "Tipo de contato não pode ser nulo")
     private TipoContato tipoContato;
 
-    @NotNull
-    @NotBlank
-    @Size(max = 13)
+    @Schema(description = "Número", required = true, example = "47984321410")
+    @NotBlank(message = "Número não pode ser nulo")
+    @Size(max = 13, message = "Número deve ter no máximo 13 dígitos")
     private String numero;
 
-    @NotBlank
+    @Schema(description = "Descrição", required = true, example = "Número da loja")
+    @NotBlank(message = "Descriçã não pode ser nula")
     private String descricao;
 
 }
