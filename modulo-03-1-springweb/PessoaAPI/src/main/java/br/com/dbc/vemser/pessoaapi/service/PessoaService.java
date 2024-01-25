@@ -41,7 +41,7 @@ public class PessoaService {
         return pessoaDTO;
     }
 
-    public List<PessoaDTO> list(){
+    public List<PessoaDTO> list() throws Exception{
         List<Pessoa> pessoaEntityList = pessoaRepository.list();
 
         List<PessoaDTO> pessoaDTOList = new ArrayList<>();

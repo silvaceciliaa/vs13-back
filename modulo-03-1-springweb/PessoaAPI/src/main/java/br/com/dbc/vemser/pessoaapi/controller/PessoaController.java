@@ -5,6 +5,7 @@ import br.com.dbc.vemser.pessoaapi.controller.documentacao.IPessoaControllerDoc;
 import br.com.dbc.vemser.pessoaapi.dto.PessoaCreateDTO;
 import br.com.dbc.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.dbc.vemser.pessoaapi.entity.Pessoa;
+import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.service.EmailService;
 import br.com.dbc.vemser.pessoaapi.service.PessoaService;
 import javax.validation.Valid;
@@ -23,7 +24,7 @@ import java.util.List;
 @RestController
 @Tag(name = "Pessoa")
 @RequestMapping("/pessoa")
-// - retirar instancias de email da service e passar para controller
+// - utilizar try catches para diferentes exceptions
 public class PessoaController implements IPessoaControllerDoc {
 
     private final PessoaService pessoaService;
@@ -37,9 +38,15 @@ public class PessoaController implements IPessoaControllerDoc {
     }
 
     @GetMapping
-    public ResponseEntity<List<PessoaDTO>> list() {
-        List<PessoaDTO> pessoas = pessoaService.list();
-        return new ResponseEntity<>(pessoas, HttpStatus.OK);
+    public ResponseEntity<List<PessoaDTO>> list(){
+        try {
+            List<PessoaDTO> pessoas = pessoaService.list();
+            return new ResponseEntity<>(pessoas, HttpStatus.OK);
+        } catch (RegraDeNegocioException re){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        }
     }
 
     @GetMapping("/byname")
