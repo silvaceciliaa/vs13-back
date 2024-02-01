@@ -39,6 +39,8 @@ public class PessoaService {
 
         PessoaDTO pessoaDTO = objectMapper.convertValue(pessoaEntity, PessoaDTO.class);
 
+        //sendWelcomeEmail(pessoaDTO);
+
         return pessoaDTO;
     }
 
@@ -168,7 +170,7 @@ public class PessoaService {
     }
 
     public PessoaDTO update(Integer id,
-                            PessoaCreateDTO pessoaCreateDTO) throws Exception {
+                         PessoaCreateDTO pessoaCreateDTO) throws Exception {
         Pessoa pessoaRecuperada = returnPersonById(id);
 
         Pessoa pessoaAtualizar = objectMapper.convertValue(pessoaCreateDTO, Pessoa.class);
@@ -178,6 +180,8 @@ public class PessoaService {
         pessoaRecuperada.setDataNascimento(pessoaAtualizar.getDataNascimento());
 
         PessoaDTO pessoaDTOAtualizada = objectMapper.convertValue(pessoaRecuperada, PessoaDTO.class);
+
+        //sendUpdateEmail(pessoaDTOAtualizada);
 
         return pessoaDTOAtualizada;
     }
@@ -191,6 +195,8 @@ public class PessoaService {
         } catch (EntidadeNaoEncontradaException ex){
             ex.printStackTrace();
         }
+
+        //sendDeleteEmail(pessoaDTOAtualizada);
     }
 
     public Pessoa returnPersonById(Integer id) throws EntidadeNaoEncontradaException {

@@ -82,5 +82,5 @@ public class PetService {
         return petRepository.findById(id)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException(NOT_FOUND_MESSAGE));
     }
-
+    
 }

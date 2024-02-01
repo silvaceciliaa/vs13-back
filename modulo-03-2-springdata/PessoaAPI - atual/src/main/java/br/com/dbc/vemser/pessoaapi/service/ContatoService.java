@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ContatoService {
+    // idPessoaNulo
 
     private final ContatoRepository contatoRepository;
     private final PessoaService pessoaService;
@@ -57,7 +58,7 @@ public class ContatoService {
     }
 
     public ContatoDTO update(Integer id,
-                             ContatoCreateDTO contatoCreateDTO) throws Exception {
+                          ContatoCreateDTO contatoCreateDTO) throws Exception {
         Contato novoContato = returnContactById(id);
 
         Contato contatoAtualizar = objectMapper.convertValue(contatoCreateDTO, Contato.class);
@@ -70,6 +71,28 @@ public class ContatoService {
 
         return contatoDTOAtualizado;
     }
+
+    // - método personalizado feito na repository
+//    public List<ContatoDTO> listByPeople(int id){
+//        List<Contato> contatos =  contatoRepository.listByPeople(id);
+//        List<ContatoDTO> contatoDTOS = new ArrayList<>();
+//
+//        for (Contato contato : contatos){
+//            ContatoDTO contatoDTO = objectMapper.convertValue(contato, ContatoDTO.class);
+//            contatoDTOS.add(contatoDTO);
+//        }
+//
+//        return contatoDTOS;
+//    }
+
+//    private boolean pessoaJaExiste(int id) {
+//        try {
+//            pessoaService.findById(id);
+//            return true;
+//        } catch (Exception e){
+//            return false;
+//        }
+//    }
 
     public Contato converterDto(ContatoCreateDTO dto) {
         return objectMapper.convertValue(dto, Contato.class);

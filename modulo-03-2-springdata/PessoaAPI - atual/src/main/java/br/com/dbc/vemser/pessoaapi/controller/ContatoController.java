@@ -16,7 +16,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@Tag(name = "Contato")
+@Tag(name = "contato")
 @RequestMapping("/contato")
 public class ContatoController {
 
@@ -37,7 +37,7 @@ public class ContatoController {
 
     @PutMapping("/{idContato}")
     public ResponseEntity<ContatoDTO> update(@PathVariable("idContato") Integer id,
-                                             @Valid @RequestBody ContatoCreateDTO contatoAtualizar) throws Exception {
+                         @Valid @RequestBody ContatoCreateDTO contatoAtualizar) throws Exception {
         return new ResponseEntity<>(contatoService.update(id, contatoAtualizar), HttpStatus.OK);
     }
 
@@ -46,4 +46,11 @@ public class ContatoController {
         contatoService.delete(id);
         return ResponseEntity.ok().build();
     }
+
+    // - método personalizado feito na repository
+//    @GetMapping("/{id}")
+//    public ResponseEntity<List<ContatoDTO>> listByName(@PathVariable("id") int id) {
+//        List<ContatoDTO> contatos = contatoService.listByPeople(id);
+//        return new ResponseEntity<>(contatos, HttpStatus.OK);
+//    }
 }
