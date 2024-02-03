@@ -86,8 +86,14 @@ public class PessoaService {
         return pessoaDTOList;
     }
 
-    public Set<Pessoa> getPessoaRelatorio(){
-        return pessoaRepository.findPessoaWithDetails();
+    public List<PessoaRelatorioDTO> listPersonCompleteRelatorio(Integer id) {
+        return pessoaRepository.procurarPessoaCompletaDTO(id)
+                .stream().map(pessoa -> {
+                    pessoa.setEnderecosPessoa(pessoaRepository.procurarEnderecos(pessoa.getIdPessoa()));
+                    pessoa.setContatosPessoa(pessoaRepository.procurarContatos(pessoa.getIdPessoa()));
+                    return pessoa;
+                }).toList();
+
     }
 
     public List<PessoaEnderecoDTO> listWithAddress(Integer idPessoa) throws EntidadeNaoEncontradaException {

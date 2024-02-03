@@ -60,9 +60,9 @@ public class PessoaController {
         return new ResponseEntity<>(pessoaService.listByBday(startDate, endDate), HttpStatus.OK);
     }
 
-    @GetMapping("/-relatorio")
-    public ResponseEntity<Set<Pessoa>> completelist(){
-        return new ResponseEntity<>(pessoaService.getPessoaRelatorio(), HttpStatus.OK);
+    @GetMapping("/relatorio")
+    public List<PessoaRelatorioDTO> getPessoasRelatorio(@Valid @RequestParam(required = false) Integer idPessoa) {
+        return pessoaService.listPersonCompleteRelatorio(idPessoa);
     }
 
     @GetMapping ("/com-enderecos")
