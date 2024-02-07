@@ -43,7 +43,7 @@ public class PetService {
 
         List<PetDTO> petsDTO = pets.stream()
                 .map(pet -> new PetDTO(pet.getIdPet(),
-                        pet.getPessoa().getIdPessoa(), // - retornando nulo
+                        pet.getPessoa().getIdPessoa(),
                         pet.getNome(),
                         pet.getTipoPet())).toList();
         return petsDTO;

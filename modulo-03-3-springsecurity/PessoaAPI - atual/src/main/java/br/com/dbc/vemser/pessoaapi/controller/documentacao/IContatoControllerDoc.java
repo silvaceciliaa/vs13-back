@@ -25,18 +25,6 @@ public interface IContatoControllerDoc {
     @GetMapping
     public ResponseEntity<List<ContatoDTO>> list();
 
-//    // - método personalizado feito na repository
-//    @Operation(summary = "Listar contatos por id", description = "Lista todos os contatos do banco pelo id informado")
-//    @ApiResponses(
-//            value = {
-//                    @ApiResponse(responseCode = "200", description = "Retorna a lista de contatos"),
-//                    @ApiResponse(responseCode = "400", description = "Erro no envio da URL da requisição"),
-//                    @ApiResponse(responseCode = "500", description = "Ocorreu uma exceção")
-//            }
-//    )
-//    @GetMapping
-//    public ResponseEntity<List<ContatoDTO>> listByName(@PathVariable("id") int id);
-
     @Operation(summary = "Adicionar contatos", description = "Adiciona um contato ao banco")
     @ApiResponses(
             value = {

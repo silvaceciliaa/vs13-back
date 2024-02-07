@@ -5,6 +5,7 @@ import br.com.dbc.vemser.pessoaapi.entity.Usuario;
 import br.com.dbc.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.dbc.vemser.pessoaapi.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,6 @@ public class UsuarioService {
         return usuarioRepository.findByLoginAndSenha(login, senha);
     }
 
-    public Optional<Usuario> findById(Integer idUsuario) {
-        return usuarioRepository.findById(idUsuario);
-    }
-
     public Optional<Usuario> findByLogin(String login) {
         return usuarioRepository.findByLogin(login);
     }
@@ -36,9 +33,25 @@ public class UsuarioService {
 
         novoUsuario.setSenha(senhaSecreta);
         novoUsuario.setLogin(usuarioLogin.getLogin());
+        // - inserir com cargos
 
         usuarioRepository.save(novoUsuario);
 
         return usuarioLogin;
+    }
+
+    public Integer getIdLoggedUser() {
+        Integer findUserId = (Integer) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return findUserId;
+    }
+
+    public Usuario getLoggedUser() throws RegraDeNegocioException {
+        return findById(getIdLoggedUser());
+    }
+
+    public Usuario findById(Integer idUsuario) throws RegraDeNegocioException {
+        return usuarioRepository.findById(idUsuario)
+                .orElseThrow(() ->
+                        new RegraDeNegocioException("Usuário não encontrado!"));
     }
 }

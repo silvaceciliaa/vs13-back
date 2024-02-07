@@ -81,40 +81,6 @@ public class EnderecoService {
         EnderecoDTO enderecoDTOAtualizado = objectMapper.convertValue(enderecoADeletar, EnderecoDTO.class);
 
     }
-// - métodos personalizado na repository
-//    public List<EnderecoDTO> listByPeople(int id){
-//        List<Endereco> enderecos = enderecoRepository.listByPeople(id);
-//
-//        List<EnderecoDTO> enderecosDTOs = new ArrayList<>();
-//
-//        for (Endereco endereco : enderecos){
-//            EnderecoDTO enderecoDTO = objectMapper.convertValue(endereco, EnderecoDTO.class);
-//            enderecosDTOs.add(enderecoDTO);
-//        }
-//        return enderecosDTOs;
-//    }
-//
-//    public List<EnderecoDTO> listByEndereco(int id) throws Exception {
-//        List<Endereco> enderecos = findById(id);
-//
-//        List<EnderecoDTO> enderecoDTOS = new ArrayList<>();
-//
-//        for (Endereco endereco : enderecos){
-//            EnderecoDTO enderecoDTO = objectMapper.convertValue(endereco, EnderecoDTO.class);
-//            enderecoDTOS.add(enderecoDTO);
-//        }
-//        return enderecoDTOS;
-//    }
-
-//    private boolean pessoaJaExiste(int id) {
-//        try {
-//            pessoaService.findById(id);
-//            return true;
-//        } catch (Exception e) {
-//            return false;
-//        }
-//    }
-
 
     private Endereco findById(Integer id) throws Exception{
         Endereco endereco = enderecoRepository.findById(id)

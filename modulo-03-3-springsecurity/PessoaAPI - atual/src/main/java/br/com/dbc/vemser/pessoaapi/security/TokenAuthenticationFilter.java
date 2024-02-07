@@ -34,5 +34,4 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         }
         return token.replace(BEARER, "");
     }
-
 }
